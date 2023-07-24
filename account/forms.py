@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
 
 import re 
 
@@ -21,7 +20,7 @@ class AccountInformationForm(forms.Form):
     phone = forms.CharField(min_length=5, max_length=14, required=True)
     address = forms.CharField(max_length=80, required=True)
     occupation = forms.CharField(max_length=60, required=True)
-    account_type = forms.CharField(choice=acc_type, default="savings", required=True)
+    account_type = forms.CharField(max_length=20, required=True)
 
     """ cleaning form fields """
 
@@ -71,7 +70,7 @@ class AccountInformationForm(forms.Form):
         elif not all(t.isdigit() for t in phone):
             raise forms.ValidationError("Phone can only contian numbers")
         
-        elif len(phone) > 5 or len(phone) > 14:
+        elif len(phone) < 5 or len(phone) > 14:
             raise forms.ValidationError("Phone must be between 5 to 14 characters")
         
         elif phone == " ":
@@ -129,7 +128,8 @@ class UserInformationForm(forms.Form):
                                 widget=forms.PasswordInput)
     password2 = forms.CharField(min_length=8, max_length=30,required=True,
                                 widget=forms.PasswordInput)
-    transaction_pin = forms.CharField(min_length=4, max_length=6,required=True)
+    transaction_pin = forms.CharField(min_length=4, max_length=6,required=True,
+                                widget=forms.PasswordInput)
 
 
     """ cleaning form fields """
@@ -206,13 +206,13 @@ class UserInformationForm(forms.Form):
     def clean_transaction_pin(self):
         transaction_pin = self.cleaned_data["transaction_pin"]
 
-        if re.search("[@_!#$%^&*()-<>?/\|}={+~:]", transaction_pin):
-            raise forms.ValidationError("Transaction pin can not contain special characters")
-
+        if not re.search("[@_!#$%^&*()-<>?/\|}={+~:]", transaction_pin):
+            # raise forms.ValidationError("Transaction pin can not contain special characters")
+            pass
         elif not all(t.isdigit() for t in transaction_pin):
             raise forms.ValidationError("Transaction pin can only contian numbers")
         
-        elif len(transaction_pin) > 4 or len(transaction_pin) > 6:
+        elif len(transaction_pin) < 4 or len(transaction_pin) > 6:
             raise forms.ValidationError("Transaction pin must be between 4 to 6 characters")
         
         elif transaction_pin == " ":
@@ -227,3 +227,39 @@ class UserInformationForm(forms.Form):
     """ cleaning form fields ends """
 
 """ Account form ... open account and register form  ends """
+
+
+""" Money Transfer  form """
+class TransferForm(forms.Form):
+    reciever_account = forms.CharField(max_length=15, required=True)
+    amount = forms.CharField(required=True)
+
+    #clean account
+    def clean_account(self):
+        reciever_account = self.cleaned_data["reciever_account"]
+        
+        if not all(r.isdigit() for r in reciever_account):
+            raise forms.ValidationError("Account number can only be numbers")
+        elif reciever_account == " ":
+            raise forms.ValidationError("Account number cannot be empty")
+        else:
+            pass 
+
+        return reciever_account
+
+
+    #clean amount
+    def amount(self):
+        amount = self.cleaned_data["amount"]
+        
+        if not all(r.isdigit() for r in amount):
+            raise forms.ValidationError("Invalid amount")
+        elif amount == " ":
+            raise forms.ValidationError("Amount cannot be empty")
+        else:
+            pass 
+
+        return amount
+
+
+""" Money Transfer form ends """
