@@ -12,7 +12,7 @@ class CustomeUserAdmin(UserAdmin):
     list_display_links = ['username','email']
     list_filter = ['username','email','is_active','is_staff','is_superuser']
     fieldsets = [
-        ('Basic Info', {'fields':('email',)}),
+        ('Basic Info', {'fields':('email','username','password')}),
         ('Permissions', {'fields':('is_active','is_staff','is_superuser',
                         'groups','user_permissions')}),
         ('Dates', {'fields': ('last_login',)})
