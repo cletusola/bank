@@ -1,0 +1,145 @@
+body{
+    background-color: whitesmoke;
+}
+
+.top-div{
+    width: 99%;
+    margin: auto;
+    border-radius: 5px;
+    height: 40px;
+    background-color: purple;
+}
+
+.top-div h2{
+    margin-top: 4px;
+    float: left;
+    margin-left: 10px;
+    color: white;
+    font-style: oblique;
+}
+
+.top-div ul{
+    margin-top: 3px;
+    float: right;
+    margin-right: 10px;
+    display: block;
+}
+
+.top-div ul li {
+    display: inline-block;
+    margin: 3px;
+    padding: 3px;
+    font-weight: bold;
+}
+
+.top-div ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.top-div ul li a:hover{
+    color: purple;
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.intro{
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    padding: 4px;
+    word-break: break-all;
+}
+
+.intro p {
+    font-size: 18px;
+}
+
+.register-div{
+    width: 80%;
+    padding: 5px;
+    margin: auto;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.register-div form{
+    width: 600px;
+    margin: auto;
+    padding: 5px;
+    background-color: white;
+    border: 3px solid purple;
+    border-radius: 8px;
+}
+
+.register-div form .inner-form-div{
+    width: 90%;
+    margin:auto;
+    margin-top: 30px;
+    background-color: white;
+    text-align: center;
+}
+
+.register-div form .inner-form-div label{
+    font-size: 15px;
+    font-style: oblique;
+    color: rgb(52, 53, 53);
+    font-weight: bold;
+}
+.register-div form .inner-form-div input{
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    width: 250px;
+    border-radius: 8px;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-bottom: 2px solid rgb(98, 100, 100);
+    text-align: center;
+}
+
+.register-div form .inner-form-div input::placeholder{
+    text-align: center;
+}
+
+.register-div form .inner-form-div .address{
+    width: 300px;
+}
+.register-div form .inner-form-div select{
+    width: 200px;
+    margin: 7px;
+    padding: 10px;
+    border-radius: 8px;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-bottom: 2px solid rgb(98, 100, 100);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.register-div form .inner-form-div button {
+    width: 100px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: purple;
+    border: transparent;
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+
+}
+
+@media (max-width:1000px) {
+
+    .register-div form {
+        width: auto;
+    }
+    
+}
