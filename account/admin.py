@@ -4,15 +4,6 @@ from .models import Account, Account_History
 
 
 
-# customer admin
-# class CustomerAdmin(admin.ModelAdmin):
-#     list_display = ['first_name','last_name','username','email','date']
-#     list_display_links = ['first_name','last_name','username','email']
-#     list_filter = ['date']
-
-# admin.site.register(Customer, CustomerAdmin)
-
-
 # account admin 
 class AccountAdmin(admin.ModelAdmin):
     list_display = ['account_number','account_owner','date_opened']
