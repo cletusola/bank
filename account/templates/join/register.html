@@ -1,10 +1,59 @@
 {% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register -Axis Bank</title>
+    <link href="{% static 'css/join/register.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="top-div">
+        <h2>AXIS Bank</h2>
 
-<form method="post" action="{% url 'register' %}">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="continue">
-</form>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </div>
+    <div class="intro">
+        <p> Open a savings or checkings account with axis bank and enjoy unlimited financial service</p>
+    </div>
+    <div class="register-div">
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="inner-form-div">
+                <label for="first_name">Firstname</label><br/>
+                <input type="text" name="first_name" placeholder="Firstname" maxlength="30" minlength="2" required id="id_first_name"><br/>
+               
+                <label for="last_name">Lastname</label><br/>
+                <input type="text" name="last_name" placeholder="Lastname" maxlength="30" minlength="2" required id="id_last_name"><br/>
+               
+                <label for="phone">Phone</label><br/>
+                <input type="text" name="phone" placeholder="Phone" maxlength="14" minlength="5" required id="id_phone"><br/>
+               
+                <label for="occupation">Occupation</label><br/>
+                <input type="text" name="occupation" placeholder="Occupation" maxlength="60" required id="id_occupation"><br/>
+               
+                <label for="address">Address</label><br/>
+                <input type="text" name="address" class="address" placeholder="Address" maxlength="80" required id="id_address"><br/>
+               
+                <label for="acc-type">Account Type</label><br/>
+                <select class="acc-type">
+                    <option value="savings">savings</option>
+                    <option value="checkings">checkings</option>
+                </select><br/>
 
+                <button type="submit">continue</button><br/><br/>
+
+                <p> Already have an account? <a href="#">login</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
 
 {% endblock %}
+
+
