@@ -231,22 +231,21 @@ class UserInformationForm(forms.Form):
 
 """ Money Transfer  form """
 class TransferForm(forms.Form):
-    reciever_account = forms.CharField(max_length=15, required=True)
+    account = forms.CharField(max_length=15, required=True)
     amount = forms.CharField(min_length=1, required=True)
-    # amount = forms.CharField(required=True)
 
     #clean account
     def clean_account(self):
-        reciever_account = self.cleaned_data["reciever_account"]
+        account = self.cleaned_data["reciever_account"]
         
-        if not all(r.isdigit() for r in reciever_account):
+        if not all(r.isdigit() for r in account):
             raise forms.ValidationError("Account number can only be numbers")
-        elif reciever_account == " ":
+        elif account == " ":
             raise forms.ValidationError("Account number cannot be empty")
         else:
             pass 
 
-        return reciever_account
+        return account
 
  
     #clean amount
