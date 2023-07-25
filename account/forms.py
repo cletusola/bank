@@ -232,7 +232,8 @@ class UserInformationForm(forms.Form):
 """ Money Transfer  form """
 class TransferForm(forms.Form):
     reciever_account = forms.CharField(max_length=15, required=True)
-    amount = forms.CharField(required=True)
+    amount = forms.CharField(min_length=1, required=True)
+    # amount = forms.CharField(required=True)
 
     #clean account
     def clean_account(self):
@@ -247,9 +248,9 @@ class TransferForm(forms.Form):
 
         return reciever_account
 
-
+ 
     #clean amount
-    def amount(self):
+    def clean_amount(self):
         amount = self.cleaned_data["amount"]
         
         if not all(r.isdigit() for r in amount):
