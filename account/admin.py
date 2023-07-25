@@ -14,7 +14,7 @@ admin.site.register(Account, AccountAdmin)
 
 # account history admin
 class AccountHistoryAdmin(admin.ModelAdmin):
-    list_display = ['sender_account', 'reciever_account','transaction_type']
-    list_display_links = ['sender_account', 'reciever_account','transaction_type']
+    list_display = ['account_history_owner','sender_name', 'reciever_account','transaction_type']
+    list_display_links = ['account_history_owner','sender_name', 'reciever_account','transaction_type']
 
 admin.site.register(Account_History, AccountHistoryAdmin)
