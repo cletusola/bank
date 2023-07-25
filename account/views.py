@@ -102,6 +102,7 @@ def user_info(request):
 
             try:
                 account = Account.objects.create(
+                    account_name = user.first_name + " " + user.last_name,
                     account_number = generate_account_number(),
                     account_owner = user,
                     account_type = request.session['account_type'],
@@ -132,8 +133,7 @@ def user_info(request):
 # account profile view 
 @login_required(login_url='login')
 def dashboard(request):
-    # profile = Account.objects.filter(account_owner=request.user)
-    profile = "abc"
+    profile = Account.objects.filter(account_owner=request.user)
     return render(request, 'pages/dashboard.html', context={'profile':profile})
 
 """ Account view ends"""
@@ -147,7 +147,7 @@ def money_transfer(request):
     if request.method == "POST":
         form = TransferForm(request.POST)
         if form.is_valid():
-            reciever_account = form.cleaned_data['receiver_account']
+            reciever_account = form.cleaned_data['account']
             amount = form.cleaned_data['amount']
             request.session['reciever_account'] = reciever_account
             request.session['amount'] = amount
@@ -178,12 +178,14 @@ def money_transfer(request):
                 return render(request, "transactions/money_transfer.html", {"form":form})
         
         else:
-            messages.error(request, "Please provide the required details to continue with yur transaction")
+            messages.error(request, "Please provide the required details to continue with your transaction")
             return render(request, "transactions/money_transfer.html", {"form":form})
         
     else:
         form = TransferForm()
-        return render(request, "transactions/money_transfer.html", {"form":form})
+        account = Account.objects.filter(account_owner=request.user)
+
+        return render(request, "transactions/money_transfer.html", {"form":form,"account":account})
 
     
 # confirm transaction 
