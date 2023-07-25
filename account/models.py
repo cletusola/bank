@@ -32,7 +32,7 @@ class Account(models.Model):
 # account history 
 class Account_History(models.Model):
     account_history_owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="history_owner")
-    sender_account= models.ForeignKey(Account, on_delete=models.CASCADE, related_name="sender")
+    sender_name= models.CharField(max_length=60, null=False, blank=False)
     reciever_account = models.ForeignKey(Account, on_delete=models.CASCADE,related_name="receiver")
     receiver_account_name = models.CharField(max_length=60, null=False,blank=False)
     transaction_type = models.CharField(max_length=50, null=False,blank=False)
