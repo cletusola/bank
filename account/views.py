@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate, logout
+# from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -124,9 +124,10 @@ def user_info(request):
 """ Account View """
 
 # account profile view 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def dashboard(request):
-    profile = Account.objects.filter(account_owner=request.user)
+    # profile = Account.objects.filter(account_owner=request.user)
+    profile = "abc"
     return render(request, 'pages/dashboard.html', context={'profile':profile})
 
 """ Account view ends"""
@@ -135,8 +136,8 @@ def dashboard(request):
 
 """ (Transaction) Money Transfer view """
 # transfer view 
-@login_required(login_url='login')
-def transfer_money(request):
+# @login_required(login_url='login')
+def money_transfer(request):
     if request.method == "POST":
         form = TransferForm(request.POST)
         if form.is_valid():
@@ -163,32 +164,35 @@ def transfer_money(request):
             # if account does not exist
             if not chk_account.count():
                 messages.error(request, "Unable to find user with this account")
-                return render(request, "transactions/transfer.html", {"form":form})
+                return render(request, "transactions/money_transfer.html", {"form":form})
             
             # if amount is greater than user account balance 
             if amount > user_balance:
                 messages.error(request, "You do not have enough money in your account")
-                return render(request, "transactions/transfer.html", {"form":form})
+                return render(request, "transactions/money_transfer.html", {"form":form})
         
         else:
             messages.error(request, "Please provide the required details to continue with yur transaction")
-            return render(request, "transactions/transfer.html", {"form":form})
+            return render(request, "transactions/money_transfer.html", {"form":form})
         
     else:
         form = TransferForm()
-        return render(request, "transactions/transfer.html", {"form":form})
+        return render(request, "transactions/money_transfer.html", {"form":form})
 
     
 # confirm transaction 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def confirm_transaction(request):
     if request.method == "POST":
         reciever_account = request.session['reciever_account']
         amount = request.session['amount']
+        reciever_name = request.session['reciever_name']
 
         try:
             # fetch sender account 
             sender = Account.objects.filter(account_owner=request.user)
+
+            sender_name = sender.account_owner.first_name + " " + sender.account_owner.last_name
             # sender bal before transaction 
             sender_bal_before_transaction = sender.account_balance
             #deduct amount from sender bal 
@@ -206,6 +210,28 @@ def confirm_transaction(request):
             reciever.save()
             # reciever bal after transaction 
             reciever_bal_after_transaction = reciever.account_balance
+
+            # create transaction history 
+            sender_history = create_account_history(
+                sender, 
+                sender_name, 
+                reciever,
+                reciever_name,
+                amount,
+                sender_bal_before_transaction,
+                sender_bal_after_transaction
+                )
+            
+            receiver_history = create_account_history(
+                reciever,
+                sender_name,
+                reciever,
+                reciever_name,
+                amount,
+                reciever_bal_before_transaction,
+                reciever_bal_after_transaction
+            )
+
         except:
             messages.error(request, "Unable to perform transaction, please try again later")
             return render(request, "transactions/confrim_transaction.html")
