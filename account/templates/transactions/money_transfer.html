@@ -1,0 +1,35 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Transfer</title>
+    <link rel="stylesheet" href="{% static 'css/transactions/money_transfer.css' %}">
+</head>
+<body>
+    <div class="top-div">
+        <h4>Welcome, username</h4>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a class="out" href="#">Logout</a></li>
+        </ul>
+    </div>
+    <div class="user-info">
+        <p>Account Balance: $3838383838 </p> 
+
+    </div>
+    <form method="post" action="{% url 'money_transfer' %}">
+        {% csrf_token %}
+        <input type="text" placeholder="Account Number" name="reciever_account" maxlength="15" required id="id_reciever_account"><br/>
+        <input type="text" placeholder="Amount" name="amount" minlength="1" required id="id_amount"><br/>
+        <button type="submit">continue</button>
+    </form>
+    <br/><br/><br/>
+    <div class="bottom">
+        <span>&copy; <i>AXIS BANK</i>, 2023</span>
+    </div>
+</body>
+</html>
+{% endblock %}

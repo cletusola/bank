@@ -1,0 +1,35 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Transaction</title>
+    <link rel="stylesheet" href="{% static 'css/transactions/money_transfer.css' %}">
+</head>
+<body>
+    <div class="top-div">
+        <h4>Welcome, username</h4>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a class="out" href="#">Logout</a></li>
+        </ul>
+    </div>
+    <div class="user-info">
+        <p>Beneficiary Account: 8383838 </p> 
+        <p>Beneficiary Name: abcd efgh </p> 
+        <p>Amount: $3838388 </p> 
+
+    </div>
+    <form method="post" action="{% url 'confirm_transaction' %}">
+        {% csrf_token %}
+        <button type="submit">Send</button>
+    </form>
+    <br/><br/><br/>
+    <div class="bottom">
+        <span>&copy; <i>AXIS BANK</i>, 2023</span>
+    </div>
+</body>
+</html>
+{% endblock %}
