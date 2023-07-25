@@ -48,6 +48,12 @@ def create_account_history(history_owner, sender, reciever, reciever_name, amoun
 
     history.save()
 
+
+
+# home view 
+def home(request):
+    return render(request, "pages/home.html")
+
 """ Account opening and registration view """
 
 # account info view
