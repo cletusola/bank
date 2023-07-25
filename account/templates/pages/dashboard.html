@@ -10,31 +10,32 @@
 </head>
 <body>
     <div class="top-div">
-        <h4>Welcome, username</h4>
-
+        <h4><span>Welcome,</span> {{request.user.username}}</h4>
         <ul>
-            <li><a href="#">Logout</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </div>
     <div class="dashboard-div">
         <div class="profile-img">
             <img src="#"> 
         </div>
+        {% for p in profile %}
         <div class="account-info">
-            <p><b>Account Balance</b>: $1000</p>
-            <p><b>Account Type</b>: ancbhdk</p>
+            <p><b>Account Balance</b>: ${{p.account_balance}}</p>
+            <p><b>Account Type</b>: {{p.account_type}}</p>
         </div>
         <hr/><br/>
         <div class="profile-info">
-            <p><b>Account Name</b>: abcdefg, hijklmnop</p>
-            <p><b>Username</b>: abcdefg, hijklmnop</p>
-            <p><b>Email</b>: abcdefg, hijklmnop</p>
-            <p><b>Phone</b>: abcdefg, hijklmnop</p>
-            <p><b>Occupation</b>: abcdefg, hijklmnop</p>
-            <p><b>Address</b>: abcdefg, hijklmnop</p>
+            <p><b>Account Name</b>: {{p.account_name}}</p>
+            <p><b>Username</b>: {{p.account_owner.username}}</p>
+            <p><b>Email</b>: {{p.account_owner.email}}</p>
+            <p><b>Phone</b>: {{p.account_phone}}</p>
+            <p><b>Occupation</b>: {{p.account_occupation}}</p>
+            <p><b>Address</b>: {{p.account_address}}</p>
         </div>
+        {% endfor%}
         <div class="edit">
-            <p><a href="#">Money Transfer</a></p> <p><a href="#">View Transaction History</a></p> <p><a href="#">Edit user information</a></p> <p><a href="#">Change Password</a></p>
+            <p><a href="{% url 'money_transfer' %}">Money Transfer</a></p> <p><a href="#">View Transaction History</a></p> <p><a href="#">Edit user information</a></p> <p><a href="#">Change Password</a></p>
         </div>
     </div>
     <br/><br/><br/>

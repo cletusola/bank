@@ -12,17 +12,18 @@
     <div class="top-div">
         <h4>Welcome, username</h4>
         <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a class="out" href="#">Logout</a></li>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a class="out" href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </div>
     <div class="user-info">
-        <p>Account Balance: $3838383838 </p> 
-
+        {% for a in account %}
+        <p>Account Balance: ${{a.account_balance}} </p> 
+        {% endfor %}
     </div>
     <form method="post" action="{% url 'money_transfer' %}">
         {% csrf_token %}
-        <input type="text" placeholder="Account Number" name="reciever_account" maxlength="15" required id="id_reciever_account"><br/>
+        <input type="text" placeholder="Account Number" name="account" maxlength="15" required id="id_account"><br/>
         <input type="text" placeholder="Amount" name="amount" minlength="1" required id="id_amount"><br/>
         <button type="submit">continue</button>
     </form>
