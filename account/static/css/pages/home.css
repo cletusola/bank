@@ -1,0 +1,63 @@
+body{
+    background-color: whitesmoke;
+}
+
+.top-div{
+    width: 99%;
+    margin: auto;
+    border-radius: 5px;
+    height: 40px;
+    background-color: purple;
+}
+
+.top-div h4{
+    margin-top: 4px;
+    float: left;
+    margin-left: 10px;
+    color: white;
+    font-style: oblique;
+}
+.top-div h4 span{
+    color: rgb(3, 3, 70);
+}
+
+.top-div ul{
+    margin-top: 3px;
+    float: right;
+    /* margin-right: 10px; */
+    display: block;
+}
+
+.top-div ul li {
+    display: inline-block;
+    margin: 3px;
+    padding: 3px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.top-div ul li a {
+    text-decoration: none;
+    color: red;
+}
+
+.top-div ul li a:hover{
+    color: red;
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.top-div ul li .login{
+    text-decoration: none;
+    color: white;
+}
+
+.top-div ul li .login:hover{
+    color: purple;
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
