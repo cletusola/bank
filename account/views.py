@@ -191,7 +191,7 @@ def confirm_transaction(request):
         try:
             # fetch sender account 
             sender = Account.objects.filter(account_owner=request.user)
-
+            # sender account name 
             sender_name = sender.account_owner.first_name + " " + sender.account_owner.last_name
             # sender bal before transaction 
             sender_bal_before_transaction = sender.account_balance
@@ -211,26 +211,29 @@ def confirm_transaction(request):
             # reciever bal after transaction 
             reciever_bal_after_transaction = reciever.account_balance
 
-            # create transaction history 
-            sender_history = create_account_history(
-                sender, 
-                sender_name, 
-                reciever,
-                reciever_name,
-                amount,
-                sender_bal_before_transaction,
-                sender_bal_after_transaction
+            try:
+                # create transaction history 
+                sender_history = create_account_history(
+                    sender, 
+                    sender_name, 
+                    reciever,
+                    reciever_name,
+                    amount,
+                    sender_bal_before_transaction,
+                    sender_bal_after_transaction
+                    )
+                
+                receiver_history = create_account_history(
+                    reciever,
+                    sender_name,
+                    reciever,
+                    reciever_name,
+                    amount,
+                    reciever_bal_before_transaction,
+                    reciever_bal_after_transaction
                 )
-            
-            receiver_history = create_account_history(
-                reciever,
-                sender_name,
-                reciever,
-                reciever_name,
-                amount,
-                reciever_bal_before_transaction,
-                reciever_bal_after_transaction
-            )
+            except:
+                messages.info(request, "could not create transaction history")
 
         except:
             messages.error(request, "Unable to perform transaction, please try again later")
