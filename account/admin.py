@@ -6,8 +6,8 @@ from .models import Account, Account_History
 
 # account admin 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ['account_number','account_owner','date_opened']
-    list_display_links = ['account_number','account_owner','date_opened']
+    list_display = ['account_name','account_owner','account_number','account_owner','date_opened']
+    list_display_links = ['account_name','account_number','account_owner','date_opened']
 
 admin.site.register(Account, AccountAdmin)
 
