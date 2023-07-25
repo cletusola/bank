@@ -11,6 +11,7 @@ class Account(models.Model):
         ('savings','savings'),
         ('checkings','checkings')
     )
+    account_name = models.CharField(max_length=60, null=False, blank=False)
     account_number = models.IntegerField(null=False,blank=False)
     account_owner = models.ForeignKey(User, on_delete=models.CASCADE)
     account_balance = models.IntegerField(default=0.00, null=False,blank=False)
