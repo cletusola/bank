@@ -6,13 +6,11 @@ from .views import (
     dashboard,
     money_transfer,
     confirm_transaction,
-    home,
 )
 
 
 
 urlpatterns = [
-    path('', home, name="home"),
     path('join/register/', register_account, name='register'),
     path('join/user_info/', user_info, name="user_info"),
     path('pages/dashboard/', dashboard, name="dashboard"),
