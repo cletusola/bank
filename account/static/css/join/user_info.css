@@ -49,12 +49,11 @@ body{
     margin: auto;
     width: 80%;
     text-align: center;
-    padding: 4px;
-    word-break: break-all;
 }
 
 .intro p {
     font-size: 18px;
+    word-wrap: break-word; 
 }
 
 .user-info-div{
@@ -121,8 +120,32 @@ body{
 
 @media (max-width:1000px) {
 
+    .register-div form {
+        width: 450px;
+    }
+    
+}
+
+@media (max-width:500px) {
+
     .user-info-div form {
-        width: auto;
+        width: 80%;
+    }
+    .user-info-div form .inner-form-div{
+        width: 80%;
+        margin:auto;
+        margin-top: 30px;
+        background-color: white;
+        text-align: center;
+    }
+
+    .user-info-div form .inner-form-div input{
+        width: 99%;
+        margin-left: -10px;
+    }
+
+    .user-info-div form .inner-form-div .address{
+        width: 99%;
     }
     
 }

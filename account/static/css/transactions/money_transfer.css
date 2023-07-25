@@ -1,0 +1,140 @@
+body{
+    background-color: whitesmoke;
+}
+
+.top-div{
+    width: 99%;
+    margin: auto;
+    border-radius: 5px;
+    height: 40px;
+    background-color: purple;
+}
+
+.top-div h4{
+    margin-top: 6px;
+    float: left;
+    margin-left: 10px;
+    color: white;
+    font-style: oblique;
+}
+
+.top-div ul{
+    margin-top: 3px;
+    float: right;
+    margin-right: 10px;
+    display: block;
+}
+
+.top-div ul li {
+    display: inline-block;
+    margin: 3px;
+    padding: 3px;
+    font-weight: bold;
+    
+}
+
+.top-div ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+}
+.top-div ul li .out{
+    color: red;
+}
+
+.top-div ul li a:hover{
+    color: purple;
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+.top-div ul li .out:hover{
+    color: white;
+    background-color: red;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+
+.user-info{
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+    margin-top: 50px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+form{
+    width: 300px;
+    margin: auto;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    border: 2px solid purple;
+    border-radius: 8px;
+}
+
+form input{
+    width: 90%;
+    padding: 8px;
+    margin: 5px;
+}
+
+form button{
+    width: 100px;
+    padding: 7px;
+    color: white;
+    background-color: purple;
+    font-size: 13px;
+    font-weight: bold;
+    border: transparent;
+    border-radius: 5px;
+}
+
+.bottom{
+    width: 98%;
+    margin: auto;
+    background-color: purple;
+    text-align: center;
+}
+
+.bottom span{
+    color: white;
+    font-size: 13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
