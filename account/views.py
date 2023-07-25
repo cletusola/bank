@@ -124,7 +124,7 @@ def user_info(request):
 """ Account View """
 
 # account profile view 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def dashboard(request):
     # profile = Account.objects.filter(account_owner=request.user)
     profile = "abc"
@@ -136,7 +136,7 @@ def dashboard(request):
 
 """ (Transaction) Money Transfer view """
 # transfer view 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def money_transfer(request):
     if request.method == "POST":
         form = TransferForm(request.POST)
@@ -181,7 +181,7 @@ def money_transfer(request):
 
     
 # confirm transaction 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def confirm_transaction(request):
     if request.method == "POST":
         reciever_account = request.session['reciever_account']
