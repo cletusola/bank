@@ -10,11 +10,11 @@
 </head>
 <body>
     <div class="top-div">
-        <h2>AXIS Bank</h2>
+        <h4>AXIS Bank</h4>
 
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Login</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
         </ul>
     </div>
     <div class="intro">
@@ -47,7 +47,7 @@
 
                 <button type="submit">continue</button><br/><br/>
 
-                <p> Already have an account? <a href="#">login</a></p>
+                <p> Already have an account? <a href="{% url 'login' %}">login</a></p>
             </div>
         </form>
     </div>
