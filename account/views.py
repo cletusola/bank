@@ -112,6 +112,7 @@ def user_info(request):
                     transaction_pin = transaction_pin
                 )
                 account.save()
+                messages.success(request, "Account created ")
                 return redirect('dashboard')
             
             except:
@@ -262,3 +263,9 @@ def confirm_transaction(request):
 
 """ (Transaction) Money Transfer view """
 
+# transaction history 
+@login_required(login_url="login")
+def account_history(request):
+    account = Account.objects.filter(account_owner=request.user)
+    history = Account_History.objects.filter(account_history_owner=account)
+    return render(request, "transactions/history.html", {"history":history})
