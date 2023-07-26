@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 
 from .forms import (
-    LogInForm
+    LogInForm,
+    ChangePassword
 )
 
 
@@ -52,3 +53,38 @@ def logout_request(request):
 
 """ authentication view ends """     
     
+
+""" change password view """
+@login_required(login_url="login")
+def change_password(request):
+    if request.method == "POST":
+        form = ChangePassword(request.POST)
+
+        if form.is_valid():
+            user = request.user 
+            current_password = form.cleaned_data["current_password"]
+            new_password = form.cleaned_data["new_password_again"]
+            user_password = user.password 
+
+            print(user.password)
+            print(new_password)
+            if current_password != user_password:
+                messages.error(request, "Current password is incorrect")
+                
+            elif current_password == new_password:
+                messages.error(request, "You can not use the same password as your old password")
+            
+            else:
+                pass 
+
+            user.set_password(new_password)
+            messages.success(request, "You have successfully changed your password")
+            return redirect("dashboard")
+        
+        else:
+            messages.error(request, "please provide valid informations")
+            return render(request, "pages/change_password.html", {"form":form})
+    
+    else:
+        form = ChangePassword()
+        return render(request, "pages/change_password.html", {"form":form}) 
