@@ -4,13 +4,13 @@ body{
 
 .top-div{
     width: 99%;
-    margin: auto;
+    margin: auto; 
     border-radius: 5px;
     height: 40px;
     background-color: purple;
 }
 
-.top-div h2{
+.top-div h4{
     margin-top: 4px;
     float: left;
     margin-left: 10px;
