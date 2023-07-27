@@ -65,7 +65,9 @@ body{
     text-align: center;
     border-radius: 8px;
 }
-
+.confirm-form{
+  border: transparent;  
+}
 form{
     width: 300px;
     margin: auto;
@@ -104,7 +106,36 @@ form button{
     color: white;
     font-size: 13px;
 }
-
+.error{
+    color: red;
+    font-weight: bold;
+    list-style-type: none;
+}
+.errorlist{
+    color: red;
+    text-decoration: none;
+    list-style-type: none;
+}
+.success{
+    color: green;
+    font-weight: bold;
+    list-style-type: none;
+}
+.info{
+    font-weight: bold;
+    list-style-type: none;
+    color: blue;
+}
+/* .error{
+    color: red;
+    font-weight: bold;
+    list-style-type: none;
+}
+.errorlist{
+    color: red;
+    text-decoration: none;
+    list-style-type: none;
+} */
 
 
 

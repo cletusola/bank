@@ -28,7 +28,7 @@ body{
 
 .top-div ul li {
     display: inline-block;
-    margin: 3px;
+    margin: 3px; 
     padding: 3px;
     font-weight: bold;
     font-size: 14px;
@@ -36,17 +36,28 @@ body{
 
 .top-div ul li a {
     text-decoration: none;
-    color: red;
+    color: white;
 }
 
 .top-div ul li a:hover{
+    color: purple;
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+.top-div ul li .logout{
+    text-decoration: none;
+    color: red;
+}
+
+.top-div ul li .logout:hover{
     color: red;
     background-color: white;
     border-radius: 3px;
     padding: 2px;
     margin: 2px;
 }
-
 .profile-img{
     width: 135px;
     height: 135px;
@@ -85,6 +96,26 @@ body{
 .bottom span{
     color: white;
     font-size: 13px;
+}
+.error{
+    color: red;
+    font-weight: bold;
+    list-style-type: none;
+}
+.errorlist{
+    color: red;
+    text-decoration: none;
+    list-style-type: none;
+}
+.success{
+    color: green;
+    font-weight: bold;
+    list-style-type: none;
+}
+.info{
+    font-weight: bold;
+    list-style-type: none;
+    color: blue;
 }
 
 

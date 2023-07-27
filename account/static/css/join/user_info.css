@@ -117,6 +117,27 @@ body{
     font-size: 14px;
 
 }
+.error{
+    color: red;
+    font-weight: bold;
+    list-style-type: none;
+}
+.errorlist{
+    color: red;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.success{
+    color: green;
+    font-weight: bold;
+    list-style-type: none;
+}
+.info{
+    font-weight: bold;
+    list-style-type: none;
+    color: blue;
+}
 
 @media (max-width:1000px) {
 

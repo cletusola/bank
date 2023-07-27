@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 User = get_user_model() 
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
@@ -61,23 +61,11 @@ def change_password(request):
         form = ChangePassword(request.POST)
 
         if form.is_valid():
-            user = request.user 
-            current_password = form.cleaned_data["current_password"]
+            user = User.objects.get(username=request.user.username) 
             new_password = form.cleaned_data["new_password_again"]
-            user_password = user.password 
-
-            print(user.password)
-            print(new_password)
-            if current_password != user_password:
-                messages.error(request, "Current password is incorrect")
-                
-            elif current_password == new_password:
-                messages.error(request, "You can not use the same password as your old password")
-            
-            else:
-                pass 
 
             user.set_password(new_password)
+            user.save()
             messages.success(request, "You have successfully changed your password")
             return redirect("dashboard")
         

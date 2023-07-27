@@ -12,14 +12,14 @@ class Account(models.Model):
         ('checkings','checkings')
     )
     account_name = models.CharField(max_length=60, null=False, blank=False)
-    account_number = models.IntegerField(null=False,blank=False)
-    account_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    account_number = models.CharField(max_length=20, null=False,blank=False)
+    account_owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_account")
     account_balance = models.IntegerField(default=0.00, null=False,blank=False)
     account_type = models.CharField(choices=acc_type, default='savings', max_length=20, null=False, blank=False)
     account_address = models.CharField(max_length=150, null=False,blank=False)
     account_phone = models.CharField(max_length=14, null=False, blank=False)
     account_occupation = models.CharField(max_length=60, null=False, blank=False)
-    transaction_pin = models.IntegerField(null=False, blank=False)
+    transaction_pin = models.CharField(max_length=6, null=False, blank=False)
     date_opened = models.DateField(auto_now_add=True)
     time_opened = models.DateTimeField(auto_now_add=True)
 
@@ -28,14 +28,14 @@ class Account(models.Model):
         ordering = ['-time_opened']
 
     def __str__(self):
-        return f"{self.account_owner.username}"
+        return f"{self.account_number}"
     
 # account history 
 class Account_History(models.Model):
     account_history_owner = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="history_owner")
     sender_name= models.CharField(max_length=60, null=False, blank=False)
     reciever_account = models.ForeignKey(Account, on_delete=models.CASCADE,related_name="receiver")
-    receiver_account_name = models.CharField(max_length=60, null=False,blank=False)
+    reciever_account_name = models.CharField(max_length=60, null=False,blank=False)
     transaction_type = models.CharField(max_length=50, null=False,blank=False)
     amount = models.CharField(max_length=30, null=True, blank=True)
     balance_before_transaction = models.IntegerField(null=False,blank=False)
@@ -49,4 +49,4 @@ class Account_History(models.Model):
 
 
     def __str__(self):
-        return f"{self.sender_account.account_number}"
+        return f"{self.account_history_owner}"

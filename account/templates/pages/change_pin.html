@@ -1,0 +1,43 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Pin -Axis Bank</title>
+    <link href="{% static 'css/pages/change_pin.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="top-div">
+        <h4>AXIS Bank</h4>
+
+        <ul>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+    <div class="intro">
+        <p><b>Change Password</b></p>
+    </div>
+    <div class="change-password-div">
+        <form method="post" action="{% url 'change_pin' %}">
+            {% csrf_token %}
+            <div class="inner-form-div">
+                <label for="id_pin">New Pin:</label><br/>
+                <input type="password" name="pin" placeholder="New Pin" maxlength="6" required id="id_pin"><br/>
+                {{form.pin.errors}}<br/>
+                <label for="id_pin2">Pin Again:</label><br/>
+                <input type="password" name="pin2" placeholder="Pin Again" maxlength="6" required id="id_pin2"><br/>
+                {{form.pin2.errors}}<br/>
+                <button type="submit">Change Pin</button><br/><br/>
+
+                <p> Changed your mind? go back to <a href="{% url 'dashboard' %}">Dashboard</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+
+

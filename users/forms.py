@@ -24,7 +24,6 @@ class LogInForm(forms.Form):
 
 """ Change password form """
 class ChangePassword(forms.Form):
-    current_password = forms.CharField(max_length=30, required=True, widget=forms.PasswordInput)
     new_password = forms.CharField(max_length=30, required=True, widget=forms.PasswordInput)
     new_password_again = forms.CharField(max_length=30, required=True, widget=forms.PasswordInput)
 

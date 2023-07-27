@@ -9,20 +9,37 @@
     <link rel="stylesheet" href="{% static 'css/transactions/money_transfer.css' %}">
 </head>
 <body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            {% for tag in message.tags %}
+                {% if tag == "success" %}
+                <p class="success">{{message}}</p>
+                {% elif tag == "info" %}
+                <p class="info">{{messages}}</p>
+                {% else %}
+                <p class="error">{{message}}</p>
+                {% endif %}
+            {% endfor %}
+
+        <!-- <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li> -->
+        {% endfor %}
+    </ul>
+    {% endif %}
     <div class="top-div">
         <h4>Welcome, username</h4>
         <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a class="out" href="#">Logout</a></li>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a class="out" href="{% url 'logout' %}">Logout</a></li>
         </ul>
     </div>
     <div class="user-info">
-        <p>Beneficiary Account: 8383838 </p> 
-        <p>Beneficiary Name: abcd efgh </p> 
-        <p>Amount: $3838388 </p> 
+        <p>Beneficiary Account: {{reciever_account}} </p> 
+        <p>Beneficiary Name: {{reciever_name}} </p> 
+        <p>Amount: ${{amount}} </p> 
 
     </div>
-    <form method="post" action="{% url 'confirm_transaction' %}">
+    <form method="post"  class="confirm-form" action="{% url 'confirm_transaction' %}">
         {% csrf_token %}
         <button type="submit">Send</button>
     </form>

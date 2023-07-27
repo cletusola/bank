@@ -1,0 +1,49 @@
+{% block content %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Info -Axis Bank</title>
+    <link href="{% static 'css/pages/update_form.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="top-div">
+        <h4>AXIS Bank</h4>
+
+        <ul>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+    <div class="intro">
+        <p><b>Update Account Information</b></p>
+    </div>
+    <div class="update-form-div">
+        <form method="post" action="{% url 'update_info' %}">
+            {% csrf_token %}
+            <div class="inner-form-div">
+                {% csrf_token %}
+                <label for="id_username">Username</label><br/>
+                {{user_form.username}}<br/>
+                {{form.username.errors}}<br/>
+                <label for="id_email">Email</label><br/>
+                {{user_form.email}}<br/>
+                {{form.email.errors}}<br/>
+                <label for="id_account_phone">Account phone</label><br/>
+                {{profile_form.account_phone}}<br/>
+                {{form.account_phone.errors}}<br/>
+                <label for="id_account_address">Account address</label><br/>
+                {{profile_form.account_address}}<br/>
+                {{form.account_address.errors}}<br/>
+                <label for="id_account_occupation">Account occupation</label><br/>
+                {{profile_form.account_occupation}}<br/>
+                {{form.account_occupation.errors}}<br/>
+                <button type="submit">Update</button>
+                <p> Changed your mind? go back to <a href="{% url 'dashboard' %}">Dashboard</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

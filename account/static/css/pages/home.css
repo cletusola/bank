@@ -38,10 +38,22 @@ body{
 
 .top-div ul li a {
     text-decoration: none;
-    color: red;
+    color: white;
 }
 
 .top-div ul li a:hover{
+    color: purple;
+    background-color: white;
+    border-radius: 3px;
+    padding: 2px;
+    margin: 2px;
+}
+.top-div ul li .logout{
+    text-decoration: none;
+    color: red;
+}
+
+.top-div ul li .logout:hover{
     color: red;
     background-color: white;
     border-radius: 3px;

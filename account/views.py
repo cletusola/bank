@@ -10,6 +10,9 @@ from .forms import (
     AccountInformationForm,
     UserInformationForm,
     TransferForm,
+    ChangePinForm,
+    UserInfoForm,
+    ProfileInfoForm,
 )
 
 from .models import (
@@ -18,7 +21,7 @@ from .models import (
 )
 
 import random 
-
+import time
 
 
 # function to generate account number 
@@ -34,10 +37,10 @@ def generate_account_number():
 
 
 # create account history 
-def create_account_history(history_owner, sender, reciever, reciever_name, amount, bal_bf, bal_aft):
+def create_account_history(history_owner, sender_name, reciever, reciever_name, amount, bal_bf, bal_aft):
     history = Account_History.objects.create(
         account_history_owner = history_owner,
-        sender_account = sender,
+        sender_name = sender_name,
         reciever_account = reciever,
         reciever_account_name = reciever_name,
         transaction_type = "money transfer",
@@ -74,6 +77,7 @@ def register_account(request):
             return redirect('user_info')
         
         else:
+            
             messages.error(request, "Please make sure you provide correct information")
             return render(request, 'join/register.html', context={'form':form})
     else:
@@ -155,16 +159,24 @@ def money_transfer(request):
 
             # check if account exist
             chk_account = Account.objects.filter(account_number=reciever_account)
+            for a in chk_account:
+                account_name = a.account_name
             
             if chk_account.count():
-                reciever_name = chk_account.account_owner.first_name + " " + chk_account.account_owner.last_name
+                reciever_name = account_name
                 request.session['reciever_name'] = reciever_name
 
             # fetch sender account balance
             user_account = Account.objects.filter(account_owner=request.user)
-            user_balance = user_account.account_balance 
+            
+            for u in user_account:
+                account_balance = int(u.account_balance)
 
-            if chk_account.count() and user_balance >= amount:
+                # print(type(amount))
+                # int_amount = int(amount)
+                # print(type(int_amount))
+
+            if chk_account.count() and account_balance >= int(amount):
 
                 return redirect("confirm_transaction")
             
@@ -174,7 +186,7 @@ def money_transfer(request):
                 return render(request, "transactions/money_transfer.html", {"form":form})
             
             # if amount is greater than user account balance 
-            if amount > user_balance:
+            if amount > account_balance:
                 messages.error(request, "You do not have enough money in your account")
                 return render(request, "transactions/money_transfer.html", {"form":form})
         
@@ -194,59 +206,69 @@ def money_transfer(request):
 def confirm_transaction(request):
     if request.method == "POST":
         reciever_account = request.session['reciever_account']
-        amount = request.session['amount']
+        amount = int(request.session['amount'])
         reciever_name = request.session['reciever_name']
 
         try:
             # fetch sender account 
-            sender = Account.objects.filter(account_owner=request.user)
+            sender = Account.objects.get(account_owner=request.user)
             # sender account name 
-            sender_name = sender.account_owner.first_name + " " + sender.account_owner.last_name
+            sender_name = sender.account_name
             # sender bal before transaction 
             sender_bal_before_transaction = sender.account_balance
             #deduct amount from sender bal 
-            sender.account_balance - amount
+            new_sender_balance = int(sender.account_balance) - int(amount)
+            #sender new balance
+            sender.account_balance = new_sender_balance
             sender.save()
             # sender bal after transaction 
             sender_bal_after_transaction = sender.account_balance 
             
             #fetch receiver account
-            reciever = Account.objects.filter(account_number=reciever_account)
+            reciever = Account.objects.get(account_number=reciever_account)
+            #reciever name 
+            reciever_account_name = reciever.account_name
             # reciever bal before transaction 
             reciever_bal_before_transaction = reciever.account_balance
             # add amount to receiver bal 
-            reciever.account_balance + amount 
+            new_reciever_balance = int(reciever.account_balance) + int(amount)
+            # reciever new balance
+            reciever.account_balance = new_reciever_balance
             reciever.save()
             # reciever bal after transaction 
             reciever_bal_after_transaction = reciever.account_balance
-
+        
             try:
-                # create transaction history 
-                sender_history = create_account_history(
-                    sender, 
-                    sender_name, 
+                sender_history = create_account_history (
+                    sender,
+                    sender_name,
                     reciever,
-                    reciever_name,
+                    reciever_account_name,
                     amount,
                     sender_bal_before_transaction,
                     sender_bal_after_transaction
-                    )
-                
-                receiver_history = create_account_history(
+                )
+                reciever_history = create_account_history (
                     reciever,
                     sender_name,
                     reciever,
-                    reciever_name,
+                    reciever_account_name,
                     amount,
                     reciever_bal_before_transaction,
                     reciever_bal_after_transaction
                 )
-            except:
-                messages.info(request, "could not create transaction history")
 
+                messages.success(request, "Transfer successful")
+                time.sleep(0.5)
+                return redirect("dashboard")
+            
+            except:
+                messages.info(request, "Transfer successful, but could not create transaction history")           
+                return redirect("dashboard")
+        
         except:
             messages.error(request, "Unable to perform transaction, please try again later")
-            return render(request, "transactions/confrim_transaction.html")
+            return render(request, "transactions/confirm_transaction.html")
     
     else:
         reciever_account = request.session['reciever_account']
@@ -266,6 +288,65 @@ def confirm_transaction(request):
 # transaction history 
 @login_required(login_url="login")
 def account_history(request):
-    account = Account.objects.filter(account_owner=request.user)
-    history = Account_History.objects.filter(account_history_owner=account)
+    account = Account.objects.get(account_owner=request.user)
+    for a in account:
+        print(a.account_number)
+        account_number = a.account_number
+    history = Account_History.objects.get(account_history_owner=account_number)
     return render(request, "transactions/history.html", {"history":history})
+
+
+# change transaction pin 
+@login_required(login_url="login")
+def change_pin(request):
+    if request.method == "POST":
+        form = ChangePinForm(request.POST)
+
+        if form.is_valid():
+            pin = form.cleaned_data["pin2"]
+
+            # get user account
+            account = Account.objects.get(account_owner=request.user)
+            account.transaction_pin = pin 
+            account.save()
+
+            messages.success(request, "Transaction pin changed successfully")
+            return redirect("dashboard")
+        
+        else:
+            messages.error(request, "please provide valid inputs")
+            return render(request, "pages/change_pin.html", {"form":form})
+    
+    else:
+        form = ChangePinForm()
+        return render(request, "pages/change_pin.html", {"form":form})
+    
+
+# update user and profile information 
+@login_required(login_url="login")
+def update_info(request):
+    user_profile = Account.objects.get(account_owner=request.user)
+    if request.method == "POST":
+        
+        user_form = UserInfoForm(request.POST, instance=request.user)
+        profile_form = ProfileInfoForm(request.POST, instance=user_profile)
+
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "information updated successfully")
+            return redirect("dashboard")
+        
+        else:
+            messages.error(request,"please provide valid informations")
+            return render(request, "pages/update_form.html",{"user_form":user_form,
+                                                             "profile_form":profile_form
+                                                             })
+    
+    else:
+        user_form = UserInfoForm(instance=request.user)
+        profile_form = ProfileInfoForm(instance=user_profile)
+        return render(request, "pages/update_form.html",{"user_form":user_form,
+                                                         "profile_form":profile_form
+                                                         })
