@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register -Axis Bank</title>
+    <title>Login -Axis Bank</title>
     <link href="{% static 'css/join/login.css' %}" rel="stylesheet">
 </head>
 <body>
@@ -21,6 +21,20 @@
         <p> Login to your AXIS Bank account </p>
     </div>
     <div class="login-div">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            {% if message.tags == "success" %}
+            <p class="success">{{message}}</p>
+            {% elif message.tags == "info" %}
+            <p class="info">{{messages}}</p>
+            {% else %}
+            <p class="error">{{message}}</p>
+            {% endif %}
+            <!-- <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li> -->
+            {% endfor %}
+        </ul>
+        {% endif %}
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <div class="inner-form-div">
