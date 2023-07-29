@@ -92,13 +92,6 @@ class Test(TestCase):
         response = self.client.post(reverse("confirm_transaction"))
         self.assertEqual(response.status_code,200)
 
-
-    # test get request for account history 
-    def test_get_account_history(self):
-        self.client.force_login(self.user)
-        response = self.client.get(reverse("account_history"))
-        self.assertEqual(response.status_code,200)
-
     # test get request for change transaction pin
     def test_get_change_pin(self):
         self.client.force_login(self.user)

@@ -287,16 +287,6 @@ def confirm_transaction(request):
 
 """ (Transaction) Money Transfer view """
 
-# transaction history 
-@login_required(login_url="login")
-def account_history(request):
-    account = Account.objects.filter(account_owner=request.user)
-    for a in account:
-        account_number = a.account_number
-    history = Account_History.objects.filter(account_history_owner=account_number)
-    return render(request, "transactions/account_history.html", {"history":history})
-
-
 # change transaction pin 
 @login_required(login_url="login")
 def change_pin(request):
