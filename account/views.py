@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-# from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -22,6 +22,7 @@ from .models import (
 
 import random 
 import time
+import io 
 
 
 # function to generate account number 
@@ -117,6 +118,7 @@ def user_info(request):
                 )
                 account.save()
                 messages.success(request, "Account created ")
+                login(request, user)
                 return redirect('dashboard')
             
             except:
@@ -138,7 +140,7 @@ def user_info(request):
 # account profile view 
 @login_required(login_url='login')
 def dashboard(request):
-    profile = Account.objects.filter(account_owner=request.user)
+    profile =  Account.objects.filter(account_owner=request.user)
     return render(request, 'pages/dashboard.html', context={'profile':profile})
 
 """ Account view ends"""
@@ -158,7 +160,7 @@ def money_transfer(request):
             request.session['amount'] = amount
 
             # check if account exist
-            chk_account = Account.objects.filter(account_number=reciever_account)
+            chk_account =  Account.objects.filter(account_number=reciever_account)
             for a in chk_account:
                 account_name = a.account_name
             
@@ -237,7 +239,7 @@ def confirm_transaction(request):
             reciever.save()
             # reciever bal after transaction 
             reciever_bal_after_transaction = reciever.account_balance
-        
+
             try:
                 sender_history = create_account_history (
                     sender,
@@ -248,6 +250,7 @@ def confirm_transaction(request):
                     sender_bal_before_transaction,
                     sender_bal_after_transaction
                 )
+
                 reciever_history = create_account_history (
                     reciever,
                     sender_name,
@@ -259,7 +262,6 @@ def confirm_transaction(request):
                 )
 
                 messages.success(request, "Transfer successful")
-                time.sleep(0.5)
                 return redirect("dashboard")
             
             except:
@@ -288,12 +290,11 @@ def confirm_transaction(request):
 # transaction history 
 @login_required(login_url="login")
 def account_history(request):
-    account = Account.objects.get(account_owner=request.user)
+    account = Account.objects.filter(account_owner=request.user)
     for a in account:
-        print(a.account_number)
         account_number = a.account_number
-    history = Account_History.objects.get(account_history_owner=account_number)
-    return render(request, "transactions/history.html", {"history":history})
+    history = Account_History.objects.filter(account_history_owner=account_number)
+    return render(request, "transactions/account_history.html", {"history":history})
 
 
 # change transaction pin 
