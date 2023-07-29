@@ -122,3 +122,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
+
+SESSION_EXPIRE_SECONDS = 300  # 5 min
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = 'logout'  # redirect to whatever page
