@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/pages/home.css' %}">
 </head>
 <body>
-    <div class="top-div">
+    <!-- <div class="top-div">
         {% if request.user.is_authenticated %}
         <h4><span>Welcome,</span> {{request.user.username}}</h4>
         <ul>
@@ -25,8 +25,29 @@
             <li><a class="login" href="{% url 'login' %}">LogIn</a></li>
             <li><a class="login" href="{% url 'register' %}">Register</a></li>
         </ul>
+    </div> -->
+    <!-- {% endif %} -->
+    <div class="header-div">
+        <div class="top-div">
+            {% if request.user.is_authenticated %}
+            <h4><span>Welcome,</span> {{request.user.username}}</h4>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a class="logout" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+        {% else %}
+        <div class="top-div">
+            <h4>AXIS Bank</h4>
+            <ul>
+                <li><a class="login" href="{% url 'login' %}">LogIn</a></li>
+                <li><a class="login" href="{% url 'register' %}">Register</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        <h3 class="bnk">Banking Solution - Axis Bank</h3>
+        <p class="bnk-2">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
     </div>
-    {% endif %}
 </body>
 </html>
 

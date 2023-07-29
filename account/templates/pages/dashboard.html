@@ -1,6 +1,6 @@
 {% block content%}
 {% load static %}
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -53,7 +53,7 @@
         </div>
         {% endfor%}
         <div class="edit">
-            <p><a href="{% url 'money_transfer' %}">Money Transfer</a></p> <p><a href="{% url 'account_history' %}">View Transaction History</a></p> <p><a href="{% url 'update_info' %}">Edit user information</a></p> <p><a href="{% url 'change_password' %}">Change Password</a></p><p><a href="{% url 'change_pin' %}">Change Transaction Pin</a></p>
+            <p><a href="{% url 'money_transfer' %}">Money Transfer</a></p> <p><a href="{% url 'update_info' %}">Edit user information</a></p> <p><a href="{% url 'change_password' %}">Change Password</a></p><p><a href="{% url 'change_pin' %}">Change Transaction Pin</a></p>
         </div>
     </div>
     <br/><br/><br/>

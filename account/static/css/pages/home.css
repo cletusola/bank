@@ -1,13 +1,14 @@
 body{
     background-color: whitesmoke;
+    padding: 0;
 }
 
 .top-div{
-    width: 99%;
+    width: 100%;
     margin: auto;
     border-radius: 5px;
     height: 40px;
-    background-color: purple;
+    background-color: rgb(217, 81, 235);
 }
 
 .top-div h4{
@@ -72,4 +73,82 @@ body{
     border-radius: 3px;
     padding: 2px;
     margin: 2px;
+}
+.header-div{
+    width: 100%;
+    margin: auto;
+    padding: 2px;
+    height: 98vh;
+    background: linear-gradient(rgba(166, 39, 170, 0.2),
+	rgba(173, 21, 166, 0.2)), url('../../../../media/hero_2.jpg');
+    background-size: cover;
+    text-align: center;
+}
+
+.bnk{
+    margin-top: 400px;
+    font-size: 40px;
+    font-style: oblique;
+    color: purple;
+}
+.bnk-2{
+    margin-top: -20px;
+    color: white;
+    font-weight: bold;
+    word-wrap: break-word;
+    font-size: 18px;
+}
+
+@media (max-width:1100px){
+    .header-div{
+        width: 100%;
+        margin: auto;
+        padding: 2px;
+        height: 98vh;
+        background: linear-gradient(rgba(168, 69, 172, 0.2),
+        rgba(121, 24, 116, 0.2)), url('../../../../media/hero_2.jpg');
+        background-size: cover;
+        text-align: center;
+    }
+    
+    .bnk{
+        margin-top: 400px;
+        font-size: 30px;
+        font-style: oblique;
+        color: purple;
+    }
+    .bnk-2{
+        margin-top: -20px;
+        color: white;
+        font-weight: bold;
+        word-wrap: break-word;
+        font-size: 16px;
+    } 
+}
+
+@media (max-width:600px){
+    .header-div{
+        width: 100%;
+        margin: auto;
+        padding: 2px;
+        height: 98vh;
+        background: linear-gradient(rgba(168, 69, 172, 0.2),
+        rgba(121, 24, 116, 0.2)), url('../../../../media/hero_2.jpg');
+        background-size: cover;
+        text-align: center;
+    }
+    
+    .bnk{
+        margin-top: 330px;
+        font-size: 30px;
+        font-style: oblique;
+        color: purple;
+    }
+    .bnk-2{
+        margin-top: -20px;
+        color: white;
+        font-weight: bold;
+        word-wrap: break-word;
+        font-size: 16px;
+    } 
 }
