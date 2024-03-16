@@ -4,7 +4,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-User = get_user_model()
 
 from .forms import (
     AccountInformationForm,
@@ -23,6 +22,9 @@ from .models import (
 import random 
 import time
 import io 
+
+User = get_user_model()
+
 
 
 # function to generate account number 
@@ -173,10 +175,6 @@ def money_transfer(request):
             
             for u in user_account:
                 account_balance = int(u.account_balance)
-
-                # print(type(amount))
-                # int_amount = int(amount)
-                # print(type(int_amount))
 
             if chk_account.count() and account_balance >= int(amount):
 
