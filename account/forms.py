@@ -1,11 +1,12 @@
 from django import forms 
 from django.contrib.auth import get_user_model
-User = get_user_model()
-# from django.core.exceptions import ValidationError
 
 from .models import Account
 
 import re 
+
+User = get_user_model()
+
 
 
 
@@ -33,15 +34,12 @@ class AccountInformationForm(forms.Form):
         if len(first_name) < 2 or len(first_name) > 30:
             raise forms.ValidationError("Name must be between 2 to 30 characters")
         
-        elif first_name == " ":
+        if first_name == " ":
             raise forms.ValidationError("Name cannot be empty")
         
-        elif re.search("[@_!#$%^&*()-<>?/\|}={+~:]", first_name):
+        if re.search(r"^[@_!#$%^&*()-<>?/\|}={+~:]", first_name):
             raise forms.ValidationError("Name cannot contain special characters")
         
-        else:
-            pass 
-
         return first_name
 
     #clean lastname
@@ -51,15 +49,12 @@ class AccountInformationForm(forms.Form):
         if len(last_name) < 2 or len(last_name) > 30:
             raise forms.ValidationError("Name must be between 2 to 30 characters")
         
-        elif last_name == " ":
+        if last_name == " ":
             raise forms.ValidationError("Name cannot be empty")
         
-        elif re.search("[@_!#$%^&*()-<>?/\|}={+~:]", last_name):
+        if re.search(r"^[@_!#$%^&*()-<>?/\|}={+~:]", last_name):
             raise forms.ValidationError("Name cannot contain special characters")
         
-        else:
-            pass 
-
         return last_name
 
     #clean phone
@@ -70,20 +65,17 @@ class AccountInformationForm(forms.Form):
         if chk_phone.count():
             raise forms.ValidationError("A user with that phone number already exist")
         
-        elif re.search("[@_!#$%^&*<>?/\|}={~:]", phone):
+        if re.search(r"^[@_!#$%^&*<>?/\|}={~:]", phone):
             raise forms.ValidationError("Phone can not contain special characters")
 
-        elif not all(t.isdigit() for t in phone):
+        if not all(t.isdigit() for t in phone):
             raise forms.ValidationError("Phone can only contian numbers")
         
-        elif len(phone) < 5 or len(phone) > 14:
+        if len(phone) < 5 or len(phone) > 14:
             raise forms.ValidationError("Phone must be between 5 to 14 characters")
         
-        elif phone == " ":
+        if phone == " ":
             raise forms.ValidationError("Phone is required")
-
-        else:
-            pass
         
         return phone
 
@@ -94,14 +86,11 @@ class AccountInformationForm(forms.Form):
         if len(address) > 80:
             raise forms.ValidationError("Address cannot be more than 80 characters")
         
-        elif address == " ":
+        if address == " ":
             raise forms.ValidationError("Address cannot be empty")
         
-        elif re.search("[@!$%^&*()<>?/\|}={~:]", address):
+        if re.search(r"^[@!$%^&*()<>?/\|}={~:]", address):
             raise forms.ValidationError("Address cannot contain special characters")
-        
-        else:
-            pass 
 
         return address
 
@@ -112,15 +101,12 @@ class AccountInformationForm(forms.Form):
         if len(occupation) > 60:
             raise forms.ValidationError("Occupation cannot be more than 60 characters")
         
-        elif occupation == " ":
+        if occupation == " ":
             raise forms.ValidationError("Occupation cannot be empty")
         
-        elif re.search("[@_!$%^&*()<>?/\|}={+~:]", occupation):
+        if re.search(r"^[@_!$%^&*()<>?/\|}={+~:]", occupation):
             raise forms.ValidationError("Occupation cannot contain special characters")
         
-        else:
-            pass 
-
         return occupation
 
     """ cleaning form fields end"""
@@ -148,16 +134,16 @@ class UserInformationForm(forms.Form):
         if chk_username.count():
             raise forms.ValidationError(f"Username {username} is unavailable")
         
-        elif username == " ":
+        if username == " ":
             raise forms.ValidationError("Username cannot be empty")
         
-        elif len(username) < 5 or len(username) > 20:
+        if len(username) < 5 or len(username) > 20:
             raise forms.ValidationError("Username must be between 4 to 20 characters")
         
-        elif re.search("[@!#$%^&*()<>?/\|}={+~:]", username):
+        if re.search(r"^[@!#$%^&*()<>?/\|}={+~:]", username):
             raise forms.ValidationError("Only '_' and '-' are allowed in username. ")
         
-        elif " " in username.strip():
+        if " " in username.strip():
             username = username.replace(" ","_")
 
         return username
@@ -170,10 +156,10 @@ class UserInformationForm(forms.Form):
         if chk_email.count():
             raise forms.ValidationError(f"Email {email} is unavailable")
         
-        elif email == " ":
+        if email == " ":
             raise forms.ValidationError("Email cannot be empty")
         
-        elif len(email) < 6 or len(email) > 60:
+        if len(email) < 6 or len(email) > 60:
             raise forms.ValidationError("Email must be between 6 to 60 characters")
         
         return email
@@ -187,46 +173,33 @@ class UserInformationForm(forms.Form):
         if password1 == " " or password2 == " ":
             raise forms.ValidationError("Password is required")
         
-        elif len(password1) < 8 or len(password1) > 30:
+        if len(password1) < 8 or len(password1) > 30:
             raise forms.ValidationError("Password must be between 8 to 30 characters")
 
-        elif not re.search("[@_!#$%^&*()-<>?/\|}={+~:]", password1):
-            raise forms.ValidationError("Password must contain at least one special character")
-        
-        elif not any(p.isupper() for p in password1):
-            raise forms.ValidationError("Password must contain at least one uppercase(capital letter)")
-        
-        elif not any(p.islower() for p in password1):
-            raise forms.ValidationError("Password must contain at least on lowercase(small letter)")
-        
-        elif not any(p.isdigit() for p in password1):
-            raise forms.ValidationError("Password must contain at least one digit(number)")
+        if not re.search(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$", password1):
+            raise forms.ValidationError("Password must contain at least one uppercase, lowercase, digit and special character")
 
-        elif password1 and password2 and password1 != password2:
+        if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords do not match")
         
-
         return password2
     
     # clean transaction pin
     def clean_transaction_pin(self):
         transaction_pin = self.cleaned_data["transaction_pin"]
 
-        if not re.search("[@_!#$%^&*()-<>?/\|}={+~:]", transaction_pin):
+        if not re.search(r"^[@_!#$%^&*()-<>?/\|}={+~:]", transaction_pin):
             # raise forms.ValidationError("Transaction pin can not contain special characters")
             pass
         
-        elif not all(t.isdigit() for t in transaction_pin):
+        if not all(t.isdigit() for t in transaction_pin):
             raise forms.ValidationError("Transaction pin can only contian numbers")
         
-        elif len(transaction_pin) < 4 or len(transaction_pin) > 6:
+        if len(transaction_pin) < 4 or len(transaction_pin) > 6:
             raise forms.ValidationError("Transaction pin must be between 4 to 6 characters")
         
-        elif transaction_pin == " ":
+        if transaction_pin == " ":
             raise forms.ValidationError("Transaction pin is required")
-
-        else:
-            pass
 
         return transaction_pin
     
@@ -247,10 +220,9 @@ class TransferForm(forms.Form):
         
         if not all(r.isdigit() for r in account):
             raise forms.ValidationError("Account number can only be numbers")
-        elif account == " ":
+
+        if account == " ":
             raise forms.ValidationError("Account number cannot be empty")
-        else:
-            pass 
 
         return account
 
@@ -261,10 +233,9 @@ class TransferForm(forms.Form):
         
         if not all(r.isdigit() for r in amount):
             raise forms.ValidationError("Invalid amount")
-        elif amount == " ":
+
+        if amount == " ":
             raise forms.ValidationError("Amount cannot be empty")
-        else:
-            pass 
 
         return amount
 
@@ -285,21 +256,17 @@ class ChangePinForm(forms.Form):
         if pin != pin2:
             raise forms.ValidationError("pin must match")
         
-        elif not re.search("[@_!#$%^&*()-<>?/\|}={+~:]", pin):
-            # raise forms.ValidationError("Transaction pin can not contain special characters")
-            pass
+        if re.search(r"^[@_!#$%^&*()-<>?/\|}={+~:]", pin):
+            raise forms.ValidationError("Transaction pin can not contain special characters")
         
-        elif not all(t.isdigit() for t in pin):
+        if not all(t.isdigit() for t in pin):
             raise forms.ValidationError("Transaction pin can only contian numbers")
         
-        elif len(pin) < 4 or len(pin) > 6:
+        if len(pin) < 4 or len(pin) > 6:
             raise forms.ValidationError("Transaction pin must be between 4 to 6 characters")
         
-        elif pin == " " or pin2 == " ":
+        if pin == " " or pin2 == " ":
             raise forms.ValidationError("Transaction pin is required")
-
-        else:
-            pass
 
         return pin2
     
@@ -324,16 +291,16 @@ class UserInfoForm(forms.ModelForm):
         if username != user_username and chk_username.count():
             raise forms.ValidationError(f"Username {username} is not available")
         
-        elif username == " ":
+        if username == " ":
             raise forms.ValidationError("Username cannot be empty")
         
-        elif len(username) < 5 or len(username) > 20:
+        if len(username) < 5 or len(username) > 20:
             raise forms.ValidationError("Username must be between 4 to 20 characters")
         
-        elif re.search("[@!#$%^&*()<>?/\|}={+~:]", username):
+        if re.search(r"^[@!#$%^&*()<>?/\|}={+~:]", username):
             raise forms.ValidationError("Only '_' and '-' are allowed in username. ")
         
-        elif " " in username.strip():
+        if " " in username.strip():
             username = username.replace(" ","_")
 
         return username
@@ -341,18 +308,20 @@ class UserInfoForm(forms.ModelForm):
     # clean email
     def clean_email(self):
         email = self.cleaned_data["email"]
+
         #fetch current user
         user_email = self.instance.email
+        
         # check if new email is available  
         chk_email = User.objects.filter(email=email)
 
         if email != user_email and chk_email.count():
             raise forms.ValidationError(f"Email {email} is not available")
         
-        elif email == " ":
+        if email == " ":
             raise forms.ValidationError("Email cannot be empty")
         
-        elif len(email) < 6 or len(email) > 60:
+        if len(email) < 6 or len(email) > 60:
             raise forms.ValidationError("Email must be between 6 to 60 characters")
         
         return email
@@ -380,21 +349,18 @@ class ProfileInfoForm(forms.ModelForm):
         if account_phone != phone and chk_phone.count():
             raise forms.ValidationError(f"Phone number {account_phone} is unavailable")
         
-        elif re.search("[@_!#$%^&*<>?/\|}={~:]", account_phone):
+        if re.search(r"^[@_!#$%^&*<>?/\|}={~:]", account_phone):
             raise forms.ValidationError("Phone can not contain special characters")
 
-        elif not all(t.isdigit() for t in account_phone):
+        if not all(t.isdigit() for t in account_phone):
             raise forms.ValidationError("Phone can only contian numbers")
         
-        elif len(account_phone) < 5 or len(account_phone) > 14:
+        if len(account_phone) < 5 or len(account_phone) > 14:
             raise forms.ValidationError("Phone must be between 5 to 14 characters")
         
-        elif account_phone == " ":
+        if account_phone == " ":
             raise forms.ValidationError("Phone is required")
 
-        else:
-            pass
-        
         return account_phone 
     
     #clean address
@@ -404,14 +370,11 @@ class ProfileInfoForm(forms.ModelForm):
         if len(account_address) > 80:
             raise forms.ValidationError("Address cannot be more than 80 characters")
         
-        elif account_address == " ":
+        if account_address == " ":
             raise forms.ValidationError("Address cannot be empty")
         
-        elif re.search("[@!$%^&*()<>?/\|}={~:]", account_address):
+        if re.search(r"^[@!$%^&*()<>?/\|}={~:]", account_address):
             raise forms.ValidationError("Address cannot contain special characters")
-        
-        else:
-            pass 
 
         return account_address
 
@@ -422,13 +385,10 @@ class ProfileInfoForm(forms.ModelForm):
         if len(account_occupation) > 60:
             raise forms.ValidationError("Occupation cannot be more than 60 characters")
         
-        elif account_occupation == " ":
+        if account_occupation == " ":
             raise forms.ValidationError("Occupation cannot be empty")
         
-        elif re.search("[@_!$%^&*()<>?/\|}={+~:]", account_occupation):
+        if re.search(r"^[@_!$%^&*()<>?/\|}={+~:]", account_occupation):
             raise forms.ValidationError("Occupation cannot contain special characters")
-        
-        else:
-            pass 
 
         return account_occupation
